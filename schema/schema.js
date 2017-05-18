@@ -3,7 +3,8 @@ const _ = require('lodash');
 const {
   GraphQLObjectType,
   GraphQLString,
-  GraphQLInt
+  GraphQLInt,
+  GraphQLSchema
 } = graphql;
 
 const users = [
@@ -25,7 +26,7 @@ const RootQuery = new GraphQLObjectType({
   fields: {
     user: {
       type: UserType,
-      args: { id: { type: GraphQLString } }
+      args: { id: { type: GraphQLString } },
       // resolve function is where we actually go to our database and
       // find the data we are actually looking for
       resolve(parentValue, args) {
@@ -33,4 +34,8 @@ const RootQuery = new GraphQLObjectType({
       }
     }
   }
+});
+
+module.exports = new GraphQLSchema({
+  query: RootQuery
 });
